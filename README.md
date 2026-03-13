@@ -1,34 +1,291 @@
 # Visual Studio Code Setup
 
-This repository contains VS Code setup for beginners in Python. It includes extensions, must-have or optional, recommended themes, and fonts.
+This a AI-powered bootstrap repository for python development in Visual Studio Code.
 
-You can utilize this repository to configure your VS Code environment to start a new Python project.
+You can utilize this repository to configure your VS Code worksapce with Copilot enabled to start a new Python project.
 
-If you need to learn how to install and set up VS Code, you can follow the tutorial [Visual Studio Code Setup for Python Beginners](https://codefun.tech/visual-studio-code-setup-for-python-beginners/).
+## Version Control
 
-## Extensions
+Use Git for version control and GitHub for remote hosting.
+
+### Generate SSH Keys
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+### Add SSH Key to GitHub
+
+1. Copy the SSH key to clipboard:
+
+```bash
+cat ~/.ssh/id_ed25519.pub | pbcopy  # macOS
+cat ~/.ssh/id_ed25519.pub | xclip -sel clip  # Linux
+```
+
+2. Go to GitHub > Settings > SSH and GPG keys > New SSH key, and paste the key.
+
+### Test SSH Connection
+
+```bash
+ssh -T git@github.com
+```
+
+## The Python Package Manager
+
+Using `uv` as the package manager for modern Python development.
+
+### Install `uv`
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### Initialize the project
+
+```bash
+uv init
+```
+
+The above command will create a _pyproject.toml_ configuration file in the current directory.
+
+### Install Python
+
+```bash
+uv install python <python_version>
+```
+
+### Create virtual environment
+
+```bash
+uv venv --python <python_version>
+```
+
+### Pin Python version
+
+```bash
+uv python pin <python_version>
+```
+
+The above command will pin the Python version in the _.python-version_ file.
+
+## Formatting
+
+Use `black` for code formatting and `isort` for import sorting.
+
+### Install `black`
+
+```bash
+uv add --dev black
+```
+
+### Configure `black` in _pyproject.toml_
+
+```toml
+[tool.black]
+# 行长度限制
+line-length = 120
+
+# 目标Python版本
+target-version = ["py313"]
+
+# 包含的目录
+include = '\.pyi?$'
+
+# 排除的目录
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | __pycache__
+  | build
+  | dist
+)/
+'''
+```
+
+### Install `isort`
+
+```bash
+uv add --dev isort
+```
+
+### Configure `isort` in _pyproject.toml_
+
+```toml
+[tool.isort]
+# 使用Black兼容模式
+profile = "black"
+
+# 行长度（与Black保持一致）
+line_length = 120
+
+# 已知的第一方模块
+known_first_party = ["python_demo"]
+
+# 源码目录
+src_paths = ["src", "tests"]
+
+# 跳过的目录
+skip = [".git", ".venv", "__pycache__", "build", "dist"]
+
+# 导入分组顺序
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+```
+
+### Run formatters
+
+```bash
+# 代码格式化
+uv run black .
+
+# 检查格式（不修改）
+uv run black --check .
+
+# 导入排序
+uv run isort .
+
+# 检查导入排序（不修改）
+uv run isort --check-only .
+```
+
+## Linting
+
+Use `flake8` for linting.
+
+### Install `flake8`
+
+```bash
+uv add --dev flake8
+```
+
+### Configure `flake8` in _.flake8_
+
+```ini
+[flake8]
+# 行长度（与Black保持一致）
+max-line-length = 120
+
+# 排除的目录
+exclude =
+    .git,
+    .venv,
+    __pycache__,
+    build,
+    dist
+
+# 忽略的规则
+ignore =
+    # E501: 行太长（由Black处理）
+    E501,
+    # W503: 二元运算符前换行（与Black风格冲突）
+    W503,
+    # E203: 冒号前空格（与Black风格冲突）
+    E203
+
+# 每个文件的最大复杂度
+max-complexity = 10
+
+# 启用的扩展
+extend-select = B,B9
+```
+
+### Run linter
+
+```bash
+uv run flake8 .
+```
+
+## Type Checking
+
+Use `mypy` for type checking.
+
+### Install `mypy`
+
+```bash
+uv add --dev mypy
+```
+
+### Configure `mypy` in _pyproject.toml_
+
+```toml
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+```
+
+### Run type checker
+
+```bash
+uv run mypy src/
+```
+
+## Testing
+
+Use `pytest` for testing and `pytest-cov` for test coverage.
+
+### Install `pytest` and `pytest-cov`
+
+```bash
+uv add --dev pytest pytest-cov
+```
+
+### Configure `pytest` and `pytest-cov` in _pyproject.toml_
+
+```toml
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--tb=short",
+]
+
+[tool.coverage.run]
+source = ["src"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]
+```
+
+### Run tests
+
+```bash
+uv run pytest
+```
+
+## Other Useful Packages
+
+```bash
+uv add --dev ipykernel rope bandit
+```
+
+## VS Code Extensions
 
 ### Python
 
-- Python (Pylance, Python Debugger)
-- Flake8 (or Pylint)
-- Black Formatter (or autopep8)
-- Mypy Type Checker
+- Python
+- Black Formatter
 - isort
-- Jupyter (Jupyter Keymap, Jupyter Slide Show, Jupyter Cell Tags, Jupyter Notebook Renderers)
-- Github Copilot (Github Copilot Chat)
-- VS Code Speech (Optional, but recommended)
-- IntelliCode (IntelliCode API Usage Examples)
-- IntelliCode Completions (If you installed Copilot, this will not work)
-
-Except for the VS Code Speech extension, the above extensions are must-haves for Python development, while the following are optional:
+- Flake8
+- Mypy Type Checker
+- Jupyter
+- Github Copilot Chat
+- Even Better TOML
 
 ### General Editing Extensions
 
 - Vim
 - EditorConfig for VS Code
-- Code Spell Checker
-- Path Intellisense
+- Markdown All in One
 - YAML
 
 ### Data Analysis
@@ -77,19 +334,7 @@ Please follow the tutorials [Choosing The Best Programming Fonts](https://codefu
 - [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
 - [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono)
 
-## Install Python Requirements
 
-For Python beginners, at least install the following packages.
+## References
 
-- ipykernel (for Jupyter)
-- rope (for VS Code Refactor)
-- bandit (a security linter)
-- pytest (for testing)
-
-Include them in the requiremets.txt file, and install them using the following commands:
-
-```console
-$ python3 -m venv venv
-$ source venv/bin/activate
-$ pip install -r requirements.txt
-```
+- [Visual Studio Code Setup for Python Beginners](https://codefun.tech/visual-studio-code-setup-for-python-beginners/)
