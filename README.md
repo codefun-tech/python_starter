@@ -41,7 +41,7 @@ Using `uv` as the package manager for modern Python development.
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### Initialize the project
+### Initialize the Project
 
 ```bash
 uv init
@@ -52,22 +52,49 @@ The above command will create a _pyproject.toml_ configuration file in the curre
 ### Install Python
 
 ```bash
-uv install python <python_version>
+uv python install <python_version>
 ```
 
-### Create virtual environment
+### Create Virtual Environment
 
 ```bash
 uv venv --python <python_version>
 ```
 
-### Pin Python version
+### Pin Python Version
 
 ```bash
 uv python pin <python_version>
 ```
 
 The above command will pin the Python version in the _.python-version_ file.
+
+### Deploy Development Environment
+
+```bash
+uv sync --all-extras
+```
+
+### Deploy Production Environment
+
+```bash
+uv sync --frozen --no-dev
+```
+
+### Update Dependencies
+
+```bash
+uv lock --upgrade
+```
+
+### Build and Publish Package
+
+If you want to build and publish your package to PyPI, you can use the following commands:
+
+```bash
+uv build
+uv publish
+```
 
 ## Formatting
 
@@ -83,16 +110,9 @@ uv add --dev black
 
 ```toml
 [tool.black]
-# 行长度限制
 line-length = 120
-
-# 目标Python版本
-target-version = ["py313"]
-
-# 包含的目录
+target-version = ["py312"]
 include = '\.pyi?$'
-
-# 排除的目录
 exclude = '''
 /(
     \.git
@@ -114,38 +134,31 @@ uv add --dev isort
 
 ```toml
 [tool.isort]
-# 使用Black兼容模式
+# Compatibility with Black
 profile = "black"
 
-# 行长度（与Black保持一致）
+# Configure to match Black's line length setting
 line_length = 120
 
-# 已知的第一方模块
 known_first_party = ["python_demo"]
-
-# 源码目录
 src_paths = ["src", "tests"]
-
-# 跳过的目录
 skip = [".git", ".venv", "__pycache__", "build", "dist"]
-
-# 导入分组顺序
 sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 ```
 
 ### Run formatters
 
 ```bash
-# 代码格式化
+# Format code
 uv run black .
 
-# 检查格式（不修改）
+# Check code format (without modifying)
 uv run black --check .
 
-# 导入排序
+# Sort imports
 uv run isort .
 
-# 检查导入排序（不修改）
+# Check import sorting (without modifying)
 uv run isort --check-only .
 ```
 

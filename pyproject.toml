@@ -1,0 +1,36 @@
+[project]
+name = "vscode"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = ["black>=26.3.1", "isort>=8.0.1"]
+
+[tool.black]
+line-length = 120
+target-version = ["py312"]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | __pycache__
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+# Compatibility with Black
+profile = "black"
+
+# Configure to match Black's line length setting
+line_length = 120
+
+known_first_party = ["python_demo"]
+src_paths = ["src", "tests"]
+skip = [".git", ".venv", "__pycache__", "build", "dist"]
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
