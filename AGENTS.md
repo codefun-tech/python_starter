@@ -1,193 +1,155 @@
-# AGENTS.md - Agent Guidelines for This Repository
+# AGENTS.md - Python Starter Project Guidelines
 
-## Overview
+This file provides guidelines for agentic coding agents working in this repository.
 
-This repository contains VS Code setup configuration for Python development. It includes:
-- VS Code settings (`.vscode/settings.json`)
-- EditorConfig (`.editorconfig`)
-- Python requirements (`requirements.txt`)
-- Documentation (README.md)
+## Project Overview
 
-This is a configuration repository, not a Python source code project.
+- **Package Manager**: uv
+- **Python Version**: >=3.12
+- **Source Directory**: src/python_starter/
+- **Test Directory**: tests/
 
-## Build, Lint, and Test Commands
+---
 
-### Python Environment Setup
+## Build / Lint / Test Commands
 
+### Install Dependencies
 ```bash
-# Create virtual environment
-python3 -m venv venv
-
-# Activate virtual environment (Linux/macOS)
-source venv/bin/activate
-
-# Activate virtual environment (Windows)
-venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
+uv sync --all-extras       # Install all dependencies including dev
 ```
 
 ### Running Tests
-
-This project uses pytest for testing. Run tests with:
-
 ```bash
-# Run all tests
-pytest
+uv run pytest              # Run all tests
+uv run pytest --cov=src --cov-report=term-missing  # Run with coverage
 
 # Run a single test file
-pytest tests/test_example.py
+uv run pytest tests/test_calculator.py
 
-# Run a single test function
-pytest tests/test_example.py::test_function_name
-
-# Run tests matching a pattern
-pytest -k "test_pattern"
-
-# Run tests with verbose output
-pytest -v
-
-# Run tests with coverage
-pytest --cov=. --cov-report=term-missing
+# Run a single test (most specific pattern)
+uv run pytest tests/test_calculator.py::TestBasicOperations::test_add_integers -v
+uv run pytest tests/test_calculator.py::test_add_parametrized -v
 ```
 
-### Linting and Type Checking
-
-The repository is configured to use these tools (see `.vscode/settings.json`):
-
+### Code Formatting
 ```bash
-# Run flake8 (with ignores for E501, E203, W503)
-flake8 .
-
-# Run black formatter (check only)
-black --check .
-
-# Run black formatter (auto-fix)
-black .
-
-# Run isort (check only)
-isort --check .
-
-# Run isort (auto-fix)
-isort .
-
-# Run mypy type checker
-mypy .
-
-# Run bandit security linter
-bandit -r .
+uv run black .             # Format code
+uv run black --check .     # Check formatting (no changes)
+uv run isort .             # Sort imports
+uv run isort --check-only .  # Check import order
 ```
 
-### Running All Checks
-
+### Linting
 ```bash
-# Run all linters and formatters
-flake8 . && black --check . && isort --check . && mypy . && bandit -r .
+uv run flake8 .            # Run flake8 linter
 ```
+
+### Type Checking
+```bash
+uv run mypy src/          # Run mypy type checker
+```
+
+### Full Quality Check (recommended before commits)
+```bash
+uv run black . && uv run isort . && uv run flake8 . && uv run mypy src/ && uv run pytest
+```
+
+---
 
 ## Code Style Guidelines
 
-### General Editor Settings (from `.vscode/settings.json`)
+### Formatting
+- **Line Length**: 120 characters maximum
+- **Indentation**: 4 spaces for Python files
+- **Tool**: black (automatically enforces consistent formatting)
+- Run `uv run black .` before committing
 
-- **Indentation**: 2 spaces for most files, 4 spaces for Python
-- **Encoding**: UTF-8
-- **Line endings**: LF (Unix-style)
-- **Trailing whitespace**: Trimmed
-- **Final newline**: Inserted
+### Import Sorting
+- **Tool**: isort with black profile
+- **Order**: FUTURE, STDLIB, THIRDPARTY, FIRSTPARTY, LOCALFOLDER
+- **First-party package**: python_starter
+- Use relative imports in /src directory (e.g., `from .calculator import Calculator`)
 
-### Python-Specific Settings
+### Linting Rules (flake8)
+- **Max Complexity**: 10 per function/method
+- **Ignored Rules**: E501 (line length), W503 (binary operator position), E203 (whitespace before colon)
+- These are configured to avoid conflicts with black
 
-#### Formatting
-- **Formatter**: Black (`ms-python.black-formatter`)
-- **Import sorting**: isort with Black profile
-- **Line length**: Default (88 characters, Black default)
-
-#### Type Checking
-- **Type checker**: mypy
-- **Type checking mode**: Basic
-- **Inlay hints**: Function return types enabled, variable types disabled, pytest parameters enabled
-
-#### Linting
-- **Linter**: flake8
-- **Ignored rules**: E501 (line too long), W503 (line break before binary operator), E203 (whitespace before colon)
-
-#### Testing
-- **Test framework**: pytest
-- **Test directory**: `tests/`
-- **Unittest**: Disabled (pytest preferred)
-
-### Editor Configuration (from `.editorconfig`)
-
-```ini
-[*]
-charset = utf-8
-indent_style = space
-indent_size = 2
-trim_trailing_whitespace = true
-end_of_line = lf
-insert_final_newline = true
-
-[*.py]
-indent_size = 4
-```
+### Type Checking (mypy)
+- **Python Version**: 3.12
+- **Strict Settings**: warn_return_any = true
+- Always provide type hints for:
+  - Function/method parameters and return types
+  - Class attributes
+  - Module-level constants
 
 ### Naming Conventions
+- **Classes**: PascalCase (e.g., `Calculator`, `MyClass`)
+- **Functions/Methods**: snake_case (e.g., `add_numbers`, `get_result`)
+- **Constants**: UPPER_SNAKE_CASE (e.g., `MAX_RETRIES`)
+- **Variables**: snake_case (e.g., `initial_value`)
 
-- **Variables/functions**: `snake_case` (e.g., `my_variable`, `calculate_total`)
-- **Classes**: `PascalCase` (e.g., `MyClass`, `DataProcessor`)
-- **Constants**: `UPPER_SNAKE_CASE` (e.g., `MAX_BUFFER_SIZE`)
-- **Private methods/variables**: `_leading_underscore`
+### Docstrings
+- Use Google-style docstrings
+- Include: Description, Args, Returns, Raises, Examples
+- Example:
+```python
+def divide(a: Number, b: Number) -> float:
+    """Divide two numbers.
 
-### Imports
+    Args:
+        a: The dividend
+        b: The divisor
 
-- Use isort with Black profile for automatic sorting
-- Group imports: standard library, third-party, local
-- Add type hints where beneficial
-- Use explicit relative imports for local modules
+    Returns:
+        The quotient of the two numbers
+
+    Raises:
+        ValueError: If the divisor is 0
+    """
+```
 
 ### Error Handling
+- Use explicit exception types (ValueError, TypeError, etc.)
+- Provide descriptive error messages
+- Example: `raise ValueError("Divisor cannot be 0")`
+- Handle exceptions at the appropriate level
 
-- Use specific exception types rather than bare `except:`
-- Include context in error messages
-- Use logging instead of print statements for debugging
-- Handle errors at the appropriate level
+### Testing Patterns
+- Test files: `test_*.py` in tests/ directory
+- Test classes: `Test*` (e.g., `TestCalculator`, `TestBasicOperations`)
+- Test methods: `test_*`
+- Use pytest features:
+  - `pytest.raises` for exception testing
+  - `@pytest.mark.parametrize` for parameterized tests
+  - `pytest.approx` for floating-point comparisons
 
-### Code Actions on Save
+### Code Organization
+- Keep related functionality together
+- Use modules (files) to organize code by feature
+- Export public API in `__init__.py`
+- Use `__all__` to explicitly define public exports
 
-The following actions run automatically on save:
-- `source.organizeImports` - Sort and organize imports
-- `source.fixAll` - Fix auto-fixable issues
+### Git Conventions
+- Use meaningful commit messages
+- Run full quality check before committing
+- Don't commit: venv/, __pycache__/, .coverage, *.egg-info/
 
-### VS Code Extensions
+---
 
-Recommended extensions for this project (auto-installed via settings):
-- Python (Pylance, Python Debugger)
-- Flake8
-- Black Formatter
-- Mypy Type Checker
-- isort
-- Jupyter (for notebooks)
-- GitHub Copilot
+## File Structure
+```
+src/python_starter/
+  __init__.py      # Package exports
+  calculator.py    # Main module
+  cli.py           # CLI entry point (if applicable)
 
-### Working With This Repository
+tests/
+  test_calculator.py  # Test module
+```
 
-1. **Do not commit Python source files** - This is a configuration-only repository
-2. **Keep requirements.txt updated** - Add any new Python dependencies
-3. **Maintain .editorconfig** - Update for any new file types
-4. **Update .vscode/settings.json** - Add new VS Code settings as needed
-5. **Document in README.md** - Keep setup instructions current
-
-### File Patterns
-
-- `.vscode/settings.json` - VS Code workspace settings
-- `.editorconfig` - Cross-editor configuration
-- `requirements.txt` - Python dependencies
-- `README.md` - Documentation
-
-## Notes for Agents
-
-- This repository serves as a template/setup for Python development
-- No source code exists here - only configuration
-- When making changes, maintain consistency with existing settings
-- Test any new settings in a local VS Code instance before committing
+## Configuration Files
+- pyproject.toml - Project metadata, tool configs
+- .flake8 - Linting rules
+- .editorconfig - Editor settings
+- .gitignore - Git ignore patterns

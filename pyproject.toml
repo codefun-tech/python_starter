@@ -1,5 +1,5 @@
 [project]
-name = "vscode"
+name = "python_starter"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -7,7 +7,14 @@ requires-python = ">=3.12"
 dependencies = []
 
 [dependency-groups]
-dev = ["black>=26.3.1", "isort>=8.0.1"]
+dev = [
+  "black>=26.3.1",
+  "flake8>=7.3.0",
+  "isort>=8.0.1",
+  "mypy>=1.19.1",
+  "pytest>=9.0.2",
+  "pytest-cov>=7.0.0",
+]
 
 [tool.black]
 line-length = 120
@@ -30,7 +37,33 @@ profile = "black"
 # Configure to match Black's line length setting
 line_length = 120
 
-known_first_party = ["python_demo"]
+known_first_party = ["python_starter"]
 src_paths = ["src", "tests"]
 skip = [".git", ".venv", "__pycache__", "build", "dist"]
 sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = ["-v", "--tb=short"]
+
+[tool.coverage.run]
+source = ["src"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: no cover",
+  "if TYPE_CHECKING:",
+  "if __name__ == .__main__.:",
+]
+
+[project.scripts]
+starter = "python_starter.cli:main"

@@ -1,0 +1,25 @@
+[flake8]
+# Keep consistency with Black
+max-line-length = 120
+
+exclude =
+    .git,
+    .venv,
+    __pycache__,
+    build,
+    dist
+
+# Rules to ignore (mostly to avoid conflicts with Black)
+ignore =
+    # E501: Let Black handle line length
+    E501,
+    # W503: Line break before binary operator (conflicts with Black)
+    W503,
+    # E203: Whitespace before ':' (conflicts with Black)
+    E203
+
+# Maximum complexity per file
+max-complexity = 10
+
+# Enabled extensions
+extend-select = B,B9

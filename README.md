@@ -176,10 +176,9 @@ uv add --dev flake8
 
 ```ini
 [flake8]
-# 行长度（与Black保持一致）
+# Keep consistency with Black
 max-line-length = 120
 
-# 排除的目录
 exclude =
     .git,
     .venv,
@@ -187,19 +186,19 @@ exclude =
     build,
     dist
 
-# 忽略的规则
+# Rules to ignore (mostly to avoid conflicts with Black)
 ignore =
-    # E501: 行太长（由Black处理）
+    # E501: Let Black handle line length
     E501,
-    # W503: 二元运算符前换行（与Black风格冲突）
+    # W503: Line break before binary operator (conflicts with Black)
     W503,
-    # E203: 冒号前空格（与Black风格冲突）
+    # E203: Whitespace before ':' (conflicts with Black)
     E203
 
-# 每个文件的最大复杂度
+# Maximum complexity per file
 max-complexity = 10
 
-# 启用的扩展
+# Enabled extensions
 extend-select = B,B9
 ```
 
@@ -273,6 +272,28 @@ exclude_lines = [
 
 ```bash
 uv run pytest
+uv run pytest --cov=src --cov-report=term-missing
+```
+
+## Run Package Scripts
+
+You can define your package scripts in the _pyproject.toml_ file under the `[project.scripts]` section. For example:
+
+```toml
+[project.scripts]
+starter = "python_starter.cli:main"
+```
+
+Install the package in editable mode to make the script available:
+
+```bash
+uv pip install -e .
+```
+
+Then you can run the script using:
+
+```bash
+uv run starter
 ```
 
 ## Other Useful Packages
