@@ -62,5 +62,9 @@
   "powermode.enabled": true,
   "powermode.shake.intensity": 0,
   "powermode.combo.counterEnabled": "hide",
-  "powermode.combo.location": "off"
+  "powermode.combo.location": "off",
+  "json.schemaDownload.trustedDomains": {
+    "https://opencode.ai/config.json": true,
+    "https://models.dev/model-schema.json": true
+  }
 }

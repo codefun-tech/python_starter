@@ -319,8 +319,8 @@ uv add --dev ipykernel rope bandit
 
 - Vim
 - EditorConfig for VS Code
-- Markdown All in One
 - YAML
+- Markdownlint
 
 ### Data Analysis
 
@@ -368,6 +368,15 @@ Please follow the tutorials [Choosing The Best Programming Fonts](https://codefu
 - [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
 - [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono)
 
+## AI
+
+### OpenCode
+
+In OpenCode, using `/init` command to generate AGENTS.md file for your project.
+
+### GitHub Copilot
+
+In VS Code, you can use `/init` command to generate a _copilot-instructions_ file in _.github_ directory.
 
 ## References
 

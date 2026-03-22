@@ -7,6 +7,8 @@
         "ms-python.mypy-type-checker",
         "ms-toolsai.jupyter",
         "github.copilot-chat",
-        "tamasfe.even-better-toml"
+        "tamasfe.even-better-toml",
+        "davidanson.vscode-markdownlint",
+        "editorconfig.editorconfig"
     ]
 }
