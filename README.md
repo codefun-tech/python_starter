@@ -16,14 +16,14 @@ ssh-keygen -t ed25519 -C "your_email@example.com"
 
 ### Add SSH Key to GitHub
 
-1. Copy the SSH key to clipboard:
+Copy the SSH key to clipboard:
 
 ```bash
 cat ~/.ssh/id_ed25519.pub | pbcopy  # macOS
 cat ~/.ssh/id_ed25519.pub | xclip -sel clip  # Linux
 ```
 
-2. Go to GitHub > Settings > SSH and GPG keys > New SSH key, and paste the key.
+Go to GitHub > Settings > SSH and GPG keys > New SSH key, and paste the key.
 
 ### Test SSH Connection
 
