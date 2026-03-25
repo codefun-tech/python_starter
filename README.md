@@ -374,10 +374,47 @@ Please follow the tutorials [Choosing The Best Programming Fonts](https://codefu
 
 In OpenCode, using `/init` command to generate AGENTS.md file for your project.
 
+#### Skills
+
+Skills are located in the _.opencode/skills_ directory. You can create your own skills or use the existing ones from the [OpenCode Skills Marketplace](https://opencode.dev/skills).
+
+We can ask AI to create a skill for us using the skill-creator skill.
+
 ### GitHub Copilot
 
 In VS Code, you can use `/init` command to generate a _copilot-instructions_ file in _.github_ directory.
 
+## Repository Structure
+
+```terminal
+python_starter/
+├── .vscode/
+│   └── settings.json
+│   └── extensions.json
+├── .github/
+│   └── skills/
+│       └── skill-creator/
+│   └── instructions/
+│   └── copilot-instructions
+├── .opencode/
+│   └── skills/
+│       └── skill-creator/
+├── src/
+│   └── python_starter/
+│       └── __init__.py
+│       └── main.py
+│       └── cli.py
+├── tests/
+│   └── test_main.py
+├── README.md
+├── pyproject.toml
+├── .flake8
+├── .gitignore
+├── .python-version
+└── .editorconfig
+```
+
 ## References
 
 - [Visual Studio Code Setup for Python Beginners](https://codefun.tech/visual-studio-code-setup-for-python-beginners/)
+- [OpenCode Documentation](https://opencode.ai/docs/)
