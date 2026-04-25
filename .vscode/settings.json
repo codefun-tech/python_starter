@@ -28,6 +28,10 @@
   "notebook.output.scrolling": true,
   // Markdown Settings
   "markdown.preview.fontFamily": "'Cascadia Code', -apple-system, , sans-serif",
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true
+  },
   // Editor Settings
   "editor.fontFamily": "Consolas, Menlo, 'Ubuntu Mono', monospace",
   "editor.fontSize": 16,
@@ -47,6 +51,8 @@
   "workbench.colorCustomizations": {
     "terminal.foreground": "#2A9D8F"
   },
+  "terminal.integrated.cursorStyle": "underline",
+  "terminal.integrated.cursorStyleInactive": "none",
   // Files Settings
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
