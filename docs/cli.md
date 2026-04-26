@@ -77,7 +77,7 @@ curl -x "socks5://user:pwd@127.0.0.1:1234" "http://httpbin.org/ip"
 curl --socks5 "127.0.0.1:1234" "https://ip.oxylabs.io/" --proxy-user user:pwd
 ```
 
-## proxychains
+## proxychains-ng
 
 ```shell
 # Install proxychains-ng
@@ -95,4 +95,36 @@ Then you can run any command with proxychains:
 
 ```shell
 proxychains4 curl "http://httpbin.org/ip"
+```
+
+## Glow
+
+[Glow](https://github.com/charmbracelet/glow) is a terminal-based markdown reader that allows you to view markdown files with syntax highlighting and formatting.
+
+```shell
+glow            # List all markdown files in the current directory and below
+glow README.md   # View the README.md file
+```
+
+## zoxide
+
+[zoxide](https://github.com/ajeetdsouza/zoxide) is a smarter cd command that allows you to quickly navigate your filesystem using a ranking algorithm based on your usage patterns.
+
+```shell
+zoxide add /path/to/directory    # Add a directory to zoxide's database
+zoxide query                     # List all directories in zoxide's database
+zoxide query keyword             # Search for a directory using a keyword
+zoxide query -ls                # List all directories in zoxide's database with their scores
+zoxide query -ls keyword        # List all directories that match the keyword with their scores
+zoxide remove /path/to/directory # Remove a directory from zoxide's database
+```
+
+```shell
+z                   # add current directory to zoxide's database
+z keyword           # navigate to the most frequently used directory that matches the keyword
+z keyword keyword2  # navigate to the most frequently used directory that matches both keywords
+```
+
+```shell
+zi keyword      # navigate to the least frequently used directory that matches the keyword
 ```
