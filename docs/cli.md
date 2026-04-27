@@ -10,6 +10,14 @@
 ssh-keygen -t ed25519 -C "your_email@example.com"
 ```
 
+## Bash
+
+```shell
+export https_proxy=http://127.0.0.1:1080
+export http_proxy=http://127.0.0.1:1080
+export all_proxy=socks5://127.0.0.1:1080
+```
+
 ## Git
 
 ### SSH Protocol
@@ -84,7 +92,7 @@ curl --socks5 "127.0.0.1:1234" "https://ip.oxylabs.io/" --proxy-user user:pwd
 sudo apt install proxychains4
 ```
 
-Edit the configuration file `/etc/proxychains.conf`:
+Edit the configuration file `/etc/proxychains4.conf`:
 
 ```text
 [ProxyList]
@@ -104,6 +112,7 @@ proxychains4 curl "http://httpbin.org/ip"
 ```shell
 glow            # List all markdown files in the current directory and below
 glow README.md   # View the README.md file
+glow -t Rainbow README.md  # View the README.md file with the Rainbow theme
 ```
 
 ## zoxide
