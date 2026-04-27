@@ -111,6 +111,12 @@ glow README.md   # View the README.md file
 [zoxide](https://github.com/ajeetdsouza/zoxide) is a smarter cd command that allows you to quickly navigate your filesystem using a ranking algorithm based on your usage patterns.
 
 ```shell
+eval "$(zoxide init bash)"  # For bash
+eval "$(zoxide init zsh)"   # For zsh
+eval "$(zoxide init fish)"  # For fish
+```
+
+```shell
 zoxide add /path/to/directory    # Add a directory to zoxide's database
 zoxide query                     # List all directories in zoxide's database
 zoxide query keyword             # Search for a directory using a keyword
