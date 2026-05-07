@@ -8,6 +8,7 @@
 - [Hermes](https://hermes-agent.nousresearch.com/)
 - [goose](https://goose-docs.ai/)
 - [Mini Agent](https://platform.minimax.io/docs/solutions/mini-agent)
+- [Pi](https://pi.dev/)
 
 ## Skills
 
