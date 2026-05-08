@@ -23,6 +23,7 @@
 - [mattpocock Skills](https://github.com/mattpocock/skills)
 - [ClawHub](https://clawhub.ai/)
 - [Awesome GitHub Copilot](https://github.com/github/awesome-copilot)
+- [Karpathy-Inspired Claude Code Guidelines](https://github.com/forrestchang/andrej-karpathy-skills)
 
 ## Hands-on Agent Building
 
