@@ -9,6 +9,7 @@
 - [goose](https://goose-docs.ai/)
 - [Mini Agent](https://platform.minimax.io/docs/solutions/mini-agent)
 - [Pi](https://pi.dev/)
+- [zerostack](https://github.com/gi-dellav/zerostack)
 
 ## Skills
 
